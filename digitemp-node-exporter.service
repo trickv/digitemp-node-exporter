@@ -1,0 +1,7 @@
+[Unit]
+Description=Runs digitemp_DS9097U to write prometheus-node-exporter textfile format files periodically
+
+[Service]
+User=root
+Type=oneshot
+ExecStart=/bin/bash -ce "digitemp_DS9097U -q -c /etc/digitemp.conf -a -o 'digitemp_DS9097U_sensor{address=\"%%R\"} %%C' | sponge > /var/lib/prometheus/node-exporter/digitemp_DS9097U.prom.$$ && mv /var/lib/prometheus/node-exporter/digitemp_DS9097U.prom{.$$,}"
